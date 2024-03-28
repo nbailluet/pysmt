@@ -59,9 +59,14 @@ class BtorInstaller(SolverInstaller):
         SolverInstaller.untar(os.path.join(self.base_dir, self.archive_name),
                               self.extract_path)
 
+        # Build picosat
+        SolverInstaller.run("bash ./contrib/setup-picosat.sh",
+                            directory=self.extract_path)
+
         # Build lingeling
         SolverInstaller.run("bash ./contrib/setup-lingeling.sh",
                             directory=self.extract_path)
+
 
         # Build Btor
         SolverInstaller.run("bash ./contrib/setup-btor2tools.sh",
