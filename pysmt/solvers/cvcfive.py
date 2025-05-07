@@ -94,9 +94,7 @@ class CVC5Options(SolverOptions):
 
 class CVC5Solver(Solver, SmtLibBasicSolver, SmtLibIgnoreMixin):
 
-    LOGICS = PYSMT_LOGICS -\
-             ARRAYS_CONST_LOGICS
-
+    LOGICS = PYSMT_LOGICS
     OptionsClass = CVC5Options
 
     def __init__(self, environment, logic, **options):
@@ -327,6 +325,16 @@ class CVC5Converter(Converter, DagWalker):
 
     def walk_array_select(self, formula, args, **kwargs):
         return self.cvc5.mkTerm(Kind.SELECT, args[0], args[1])
+
+    def walk_array_value(self, formula, args, **kwargs):
+        arr_type = self.env.stc.get_type(formula)
+        arr_sort = self._type_to_cvc5(arr_type)
+        term = self.cvc5.mkConstArray(arr_sort, args[0])
+
+        for i in range(1, len(args), 2):
+            term = self.walk_array_store(None, (term, args[i], args[i+1]))
+
+        return term
 
     def walk_minus(self, formula, args, **kwargs):
         return self.cvc5.mkTerm(Kind.SUB, args[0], args[1])
