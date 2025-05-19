@@ -784,9 +784,9 @@ class SmtLibParser(object):
                         counter -= 1
                     buff.append(tk)
                 value = "".join(buff)
-            else:
+            elif tk != ")":
                 value = tk
-            tk = tokens.consume()
+                tk = tokens.consume()
             self.cache.annotations.add(term, keyword, value)
 
         assert len(stack[-1]) == 0
