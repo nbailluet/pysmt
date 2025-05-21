@@ -495,7 +495,7 @@ class Z3Converter(Converter, DagWalker):
                 "Quantified back conversion is currently not supported")
 
         assert not len(args) > 2 or \
-            (z3.is_and(expr) or z3.is_or(expr) or
+            (z3.is_function(expr) or z3.is_and(expr) or z3.is_or(expr) or
              z3.is_add(expr) or z3.is_mul(expr) or
              z3.is_app_of(expr, z3.Z3_OP_BAND) or z3.is_app_of(expr, z3.Z3_OP_BOR) or
              z3.is_app_of(expr, z3.Z3_OP_BADD) or z3.is_app_of(expr, z3.Z3_OP_BMUL) or
