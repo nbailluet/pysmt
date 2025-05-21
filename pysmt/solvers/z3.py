@@ -434,6 +434,8 @@ class Z3Converter(Converter, DagWalker):
                 return z3.ArrayRef
             elif type_.is_bv_type():
                 return z3.BitVecRef
+            elif type_.is_custom_type():
+                return z3.ExprRef
             else:
                 raise NotImplementedError(formula)
         elif formula.node_type() in op.ARRAY_OPERATORS:
