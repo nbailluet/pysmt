@@ -784,7 +784,7 @@ class SmtLibParser(object):
                         counter -= 1
                     buff.append(tk)
                 value = "".join(buff)
-            elif tk != ")":
+            elif tk != ")" and not tk.startswith(":"):
                 value = tk
                 tk = tokens.consume()
             self.cache.annotations.add(term, keyword, value)
